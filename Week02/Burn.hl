@@ -1,0 +1,6 @@
+spending burn
+
+func main() -> Bool {
+    false
+}
+// Validation will always fail for any transaction grabbing a utxo held at this script's address. Hence utxos are locked forever.

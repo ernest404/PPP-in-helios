@@ -1,0 +1,8 @@
+spending gift //script_purpose script_name
+
+// Main validator function, no input and returns a Bool: true
+func main() -> Bool {
+    true
+}
+
+// Validation will always succeed for any transaction grabbing a utxo held at this script's address.
