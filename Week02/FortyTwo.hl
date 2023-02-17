@@ -1,0 +1,15 @@
+spending forty_two
+
+struct Redeemer{
+    input: Int
+}
+
+func main(redeemer:Redeemer) -> Bool {
+    (redeemer.input == 42).trace("wrong redeemer")
+}
+
+const INPUT = 42
+
+const MY_REDEEMER = Redeemer{
+    input: INPUT
+}
