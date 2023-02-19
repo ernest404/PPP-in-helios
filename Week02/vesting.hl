@@ -1,0 +1,23 @@
+spending vesting
+
+struct Datum{
+    beneficiary: PubKeyHash
+    deadline: Time 
+}
+
+func main(datum:Datum, ctx:ScriptContext) -> Bool {
+    tx: Tx = ctx.tx; //access information about the current transaction.
+    now: Time = tx.time_range.start;
+    signedByBeneficiary: Bool = tx.is_signed_by(datum.beneficiary);
+    (now > datum.deadline).trace("Deadline not reached") && signedByBeneficiary.trace("You are not the beneficary")
+    
+}
+
+// Datum parameters
+const BENEFICIARY = #
+const DEADLINE = 0 //posix time seconds since 1970
+
+const MY_DATUM = Datum{
+    beneficiary: PubKeyHash::new(BENEFICIARY),
+    deadline: Time::new(DEADLINE*1000) //time is in milliseconds
+}
