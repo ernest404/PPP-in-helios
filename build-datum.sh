@@ -1,0 +1,1 @@
+helios eval vesting.hl MY_DATUM -BENEFICIARY "643d9d93b92123290f4793eec9eb624671470b873d9ba54ba28b6182" -DEADLINE $(($(date +%s) + 300))
