@@ -1,0 +1,20 @@
+minting nft
+
+struct TxOutRef {
+    tx_id: TxId
+    index: Int
+}
+
+const OREF: TxOutputId = TxOutputId::new(TxId::new(#3347c57e94b1b4958bf5b0ed09452645a95c9b0f6308fc8cc95c5086399ae8c1), 1)
+
+func main(ctx:ScriptContext) -> Bool {
+    tx:Tx = ctx.tx; //gets the transactions data structure
+
+    nft_assetclass: AssetClass = AssetClass::new(
+        ctx.get_current_minting_policy_hash(),
+        "NFT01".encode_utf8() //Turns a String into a sequence of utf-8 bytesarray which is ByteString needed for the tokenname.
+    );
+
+    value_minted: Value = tx.minted;
+    value_minted == Value::new(nft_assetclass, 1) && tx.inputs.any((input: TxInput) -> Bool {input.output_id == OREF})
+}
