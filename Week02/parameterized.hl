@@ -1,0 +1,13 @@
+spending parameterized
+
+struct VestingParam {
+    beneficiary: PubKeyHash
+    deadline: Time
+}
+
+const params = VestingParam {beneficiary:PubKeyHash::new(#643d9d93b92123290f4793eec9eb624671470b873d9ba54ba28b6182), deadline: Time::new(3000*1000)}
+
+func main(ctx:ScriptContext) -> Bool {
+    now: Time = ctx.tx.time_range.start;
+    ctx.tx.is_signed_by(params.beneficiary).trace("You are not the beneficiary") && (now > params.deadline).trace("Deadline not reached")
+}
