@@ -1,0 +1,7 @@
+minting signed
+
+const OWNER: PubKeyHash = PubKeyHash::new(#fa6e5e140f3e45dea1cf6e87d4c69c5238c2e080ff13fbd01e8954cd)
+
+func main(ctx: ScriptContext) -> Bool {
+    ctx.tx.is_signed_by(OWNER)
+}
