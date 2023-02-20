@@ -1,0 +1,28 @@
+spending vesting_advanced
+// This contract will lock up some tokens owned by an owner for a beneficiary that can't be claimed until after a deadline. The owner can get their funds back if the deadline has not passed yet
+
+// The public key hash is what is used to identify the user's account on the Cardano blockchain.
+struct Datum {
+    creator: PubKeyHash
+    beneficiary: PubKeyHash
+    deadline: Time
+}
+
+enum Redeemer {
+    Cancel //by the owner. Only valid if owner signed the transaction and deadline hasn't passed
+    Claim //by beneficiary. Only valid if the beneficiary signed the transaction and deadline has passed.
+}
+
+func main(datum: Datum, redeemer: Redeemer, context: ScriptContext) -> Bool {
+    tx: Tx = context.tx;
+    now: Time = tx.time_range.start; //current time that the transaction took place.
+
+    redeemer.switch {
+        Cancel => {
+            now < datum.deadline && tx.is_signed_by(datum.creator)
+        },
+        Claim => {
+            now > datum.deadline && tx.is_signed_by(datum.beneficiary)
+        }
+    }
+}
